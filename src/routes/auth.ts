@@ -34,7 +34,7 @@ const changePasswordSchema = z.object({
 router.post('/register', async (req, res) => {
   try {
     const data = registerSchema.parse(req.body);
-    const result = await authService.register(data);
+    const result = await authService.register(data as any);
     res.json(result);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
@@ -44,7 +44,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const data = loginSchema.parse(req.body);
-    const result = await authService.login(data);
+    const result = await authService.login(data as any);
     res.json(result);
   } catch (error: any) {
     res.status(401).json({ error: error.message });

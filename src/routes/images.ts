@@ -41,7 +41,7 @@ router.post('/upload', authenticate, authorize(UserRole.ADMIN, UserRole.EDITOR),
       file: req.file,
       ...data,
       userId: req.user.userId,
-    });
+    } as any);
 
     res.json(image);
   } catch (error: any) {
