@@ -1,15 +1,13 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
-import dotenv from 'dotenv';
 import { initializeDatabase } from './config/database';
 import authRoutes from './routes/auth';
 import imageRoutes from './routes/images';
 import userRoutes from './routes/users';
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;

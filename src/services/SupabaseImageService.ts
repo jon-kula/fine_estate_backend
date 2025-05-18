@@ -22,7 +22,16 @@ export class SupabaseImageService {
 
   constructor() {
     const supabaseUrl = process.env.SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_ANON_KEY || '';
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY || '';
+    
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Missing Supabase credentials:', { 
+        url: supabaseUrl ? 'Set' : 'Missing', 
+        key: supabaseKey ? 'Set' : 'Missing' 
+      });
+      throw new Error('Supabase credentials not configured');
+    }
+    
     this.supabase = createClient(supabaseUrl, supabaseKey);
     
     // Create bucket if it doesn't exist
