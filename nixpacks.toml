@@ -1,11 +1,14 @@
 [phases.setup]
-nixPkgs = ["nodejs_18", "yarn-1_x"]
+nixPkgs = ["nodejs_18", "npm-9_x"]
 
 [phases.install]
-cmds = ["npm install"]
+cmds = ["npm ci"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
 cmd = "node dist/index.js"
+
+[providers]
+node = true
