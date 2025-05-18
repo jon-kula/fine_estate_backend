@@ -1,0 +1,30 @@
+databases:
+  - name: fine-estate-db
+    databaseName: fine_estate
+    user: fine_estate_user
+    plan: starter
+
+services:
+  - type: web
+    name: fine-estate-api
+    runtime: node
+    plan: starter
+    buildCommand: npm install && npm run build
+    startCommand: node dist/index.js
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fine-estate-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        value: us-west-2
+      - key: AWS_S3_BUCKET
+        sync: false
