@@ -2,12 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/AuthService';
 import { UserRole } from '../entities/User';
 
-interface AuthRequest extends Request {
+export interface AuthRequest extends Request {
   user?: {
     userId: string;
     email: string;
     role: UserRole;
   };
+  headers: Request['headers'];
 }
 
 const authService = new AuthService();
