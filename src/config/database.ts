@@ -1,10 +1,8 @@
+import 'dotenv/config';
 import { DataSource } from 'typeorm';
-import dotenv from 'dotenv';
 import { User } from '../entities/User';
 import { Image } from '../entities/Image';
 import { ImageVariant } from '../entities/ImageVariant';
-
-dotenv.config();
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -26,6 +24,16 @@ export const AppDataSource = new DataSource({
 
 export const initializeDatabase = async () => {
   try {
+    const dbUrl = process.env.DATABASE_URL;
+    if (!dbUrl) {
+      throw new Error('DATABASE_URL environment variable is not set');
+    }
+    
+    // Log database URL without password for debugging
+    const urlParts = dbUrl.split('@');
+    const hostPart = urlParts[1] || '';
+    console.log('Connecting to database:', hostPart);
+    
     await AppDataSource.initialize();
     console.log('Database connection established');
   } catch (error) {
