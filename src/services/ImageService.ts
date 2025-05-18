@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 
 interface ImageUploadOptions {
-  file: Express.Multer.File;
+  file: any;
   title: string;
   description?: string;
   category?: string;

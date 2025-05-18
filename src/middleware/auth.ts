@@ -18,7 +18,8 @@ export const authenticate = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
+    const authHeader = req.headers.authorization || req.headers['Authorization'] as string;
+    const token = authHeader?.replace('Bearer ', '');
 
     if (!token) {
       res.status(401).json({ error: 'Authentication required' });

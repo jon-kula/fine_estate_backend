@@ -3,7 +3,7 @@ import { Request } from 'express';
 
 const storage = multer.memoryStorage();
 
-const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const fileFilter = (req: Request, file: any, cb: multer.FileFilterCallback) => {
   const allowedFormats = process.env.ALLOWED_IMAGE_FORMATS?.split(',') || ['jpeg', 'jpg', 'png', 'webp', 'gif'];
   const fileExt = file.originalname.split('.').pop()?.toLowerCase();
   
