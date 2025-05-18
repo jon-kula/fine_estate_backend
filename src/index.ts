@@ -62,7 +62,20 @@ app.post('/api/auth/login', (req, res) => {
       user: {
         id: '1',
         email: 'jtsf71@gmail.com',
-        role: 'Admin'
+        role: 'Admin',
+        firstName: 'Admin',
+        lastName: 'User'
+      }
+    });
+  } else if (email === 'martin@finesf.com' && password === 'day_!!!') {
+    res.json({
+      token: 'test-token-456',
+      user: {
+        id: '2',
+        email: 'martin@finesf.com',
+        role: 'Admin',
+        firstName: 'Martin',
+        lastName: 'Admin'
       }
     });
   } else {
