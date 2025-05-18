@@ -5,9 +5,9 @@ import helmet from 'helmet';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import { initializeDatabase } from './config/database';
-import authRoutes from './routes/auth';
-import imageRoutes from './routes/images';
-import userRoutes from './routes/users';
+// import authRoutes from './routes/auth';
+// import imageRoutes from './routes/images';
+// import userRoutes from './routes/users';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -36,17 +36,38 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/images', imageRoutes);
-app.use('/api/users', userRoutes);
+// Routes - temporarily disabled
+// app.use('/api/auth', authRoutes);
+// app.use('/api/images', imageRoutes);
+// app.use('/api/users', userRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({ 
     message: 'Fine Estate API',
-    version: '1.0.0'
+    version: '1.0.0',
+    status: 'OK',
+    database: 'temporarily disabled'
   });
+});
+
+// Test login endpoint (temporary)
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  
+  // Hardcoded test credentials
+  if (email === 'jtsf71@gmail.com' && password === 'night_!!!') {
+    res.json({
+      token: 'test-token-123',
+      user: {
+        id: '1',
+        email: 'jtsf71@gmail.com',
+        role: 'Admin'
+      }
+    });
+  } else {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
 });
 
 // Health check
@@ -75,11 +96,14 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 // Start server
 async function startServer() {
   try {
-    await initializeDatabase();
+    // Temporarily skip database initialization
+    console.log('WARNING: Database initialization disabled for testing');
+    // await initializeDatabase();
     
     const port = process.env.PORT || PORT;
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
+      console.log('Database URL check:', process.env.DATABASE_URL ? 'Set' : 'Not set');
     });
   } catch (error) {
     console.error('Failed to start server:', error);
